@@ -14,6 +14,12 @@ struct Tape
     @tape[@pos] += 1
   end
 
+  def input
+    if byte = STDIN.read_byte
+      @tape[@pos] = byte.to_i
+    end
+  end
+
   def dec
     @tape[@pos] -= 1
   end
@@ -43,6 +49,7 @@ class Program
       when '+'; tape.inc
       when '-'; tape.dec
       when '.'; print tape.get.chr
+      when ','; tape.input
       when '['; pc = @bracket_map[pc] if tape.get == 0
       when ']'; pc = @bracket_map[pc] if tape.get != 0
       else # skip
